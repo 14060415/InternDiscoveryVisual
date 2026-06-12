@@ -1,0 +1,258 @@
+/* ──────────────────────────────────────────────────────────────────────
+ * DiscoveryOS · 暖纸 Paper (Light · Warm) · 单主题抽取 · tweakcn / shadcn 主题导出
+ *
+ * 设计立场 ：
+ *   - 暖纸：#fdfcf8 暖米背景 + #1554a8 朱砂蓝主色（H 214° / S 78% / L 37%）
+ *   - 辅助色（v2.4）：mint / cyan / violet / magenta · 4 色相 × 5 阶
+ *   - 阴影克制、字体即语义
+ *   - 圆角：本文件将原「2px 唯一锐角」改为 5 阶阶梯（见下 §圆角）
+ *
+ *
+ * 用法（tweakcn）：
+ *   1. 打开 https://tweakcn.com/editor/theme
+ *   2. Import → Paste CSS → 粘贴本文件全部内容
+ *   （本文件为单主题 —— 暖纸；不含 dark 预览。）
+ *
+ * 用法（直接接入 shadcn/ui 项目 · Tailwind v4）：
+ *   将本文件粘贴进 app/globals.css，覆盖原 :root 块即可。
+ * ──────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── 表面 / 文字 ─────────────────────────────────────── */
+  --background: #fdfcf8;            /* 暖纸主背景 · DiscoveryOS --paper */
+  --foreground: #1a2332;            /* 主文字 · --ink */
+
+  --card: #ffffff;                  /* L1 卡片 · 平等容器 */
+  --card-foreground: #1a2332;
+
+  --popover: #ffffff;               /* dropdown / popover / tooltip 容器 */
+  --popover-foreground: #1a2332;
+
+  /* ── 主色 · 朱砂蓝 L6 ─────────────────────────────────── */
+  --primary: #1554a8;               /* --vermilion-6 · H 214° / S 78% / L 37% */
+  --primary-foreground: #ffffff;    /* AA 5.6:1 */
+
+  /* ── 次级 / 静音 / 强调 ──────────────────────────────── */
+  --secondary: #f7f4ec;             /* --paper-warm · 悬停渗透色 */
+  --secondary-foreground: #1a2332;
+
+  --muted: #fafaf7;                 /* --paper-cool · 中性次级容器 */
+  --muted-foreground: #7a8394;      /* --ink-mute · AA 4.6:1 */
+
+  --accent: #f7f4ec;                /* hover/active 底色 */
+  --accent-foreground: #1554a8;     /* active 文字走主色 */
+
+  /* ── 破坏性（删除 / 错误）───────────────────────────── */
+  --destructive: #c03030;           /* --error */
+  --destructive-foreground: #ffffff;
+
+  /* ── 边框 / 输入 / 焦点环 ───────────────────────────── */
+  --border: #e8e4d9;                /* --rule */
+  --input: #e8e4d9;
+  --ring: #1554a8;                  /* :focus-visible 朱砂环（功能上 DiscoveryOS 用 ink shadow，
+                                       但 shadcn ring 默认绑定 primary）*/
+
+  /* ── 操作按钮色彩层级（Action Button Tiers · 源自 Figma §3.1 BUTTON FAMILY）─────
+     规范：当前页面「最重要」的操作按钮 = 白字 + 墨色（梯度）填充；「次级重要」按钮 =
+     白字 + 主色朱砂蓝（梯度）填充；「普通」操作 = 边框 + 白底。
+     蓝色不进入最高层级操作 —— 主操作 = 墨色 Solid、次级 = 朱砂蓝。
+     「梯度」= 沿色阶在 default / hover / pressed 间切换（始终单色填充，非 CSS 渐变）；
+     disabled = 在按钮上施加 opacity:.5（非单独颜色）。
+     注：shadcn 的 --primary(=朱砂) 为「品牌强调 / focus ring」语义，≠ 主操作按钮填充色。 */
+  /* 主操作 .btn-primary · 墨色 + 白字 */
+  --btn-primary-bg: #1a2332;          /* default · --ink */
+  --btn-primary-bg-hover: #3a4556;    /* hover · --ink-soft（深底 hover 提亮） */
+  --btn-primary-bg-active: #1a2332;   /* pressed · --ink（已是最深阶） */
+  --btn-primary-fg: #ffffff;
+  /* 次级操作 .btn-secondary · 朱砂蓝 + 白字 */
+  --btn-secondary-bg: #1554a8;        /* default · --vermilion-6 */
+  --btn-secondary-bg-hover: #0c3c80;  /* hover · --vermilion-7（加深） */
+  --btn-secondary-bg-active: #0c3c80; /* pressed · --vermilion-7 */
+  --btn-secondary-fg: #ffffff;
+  /* 普通操作 .btn · 边框 + 白底 */
+  --btn-bg: #fdfcf8;                  /* default · --paper */
+  --btn-bg-hover: #f7f4ec;            /* hover · --paper-warm */
+  --btn-border: #e8e4d9;              /* --rule */
+  --btn-fg: #3a4556;                  /* --ink-soft */
+  /* 无形态 .btn-ghost · 透明底，hover 才显 --rule 边；破坏性 .btn-danger · 白底 + error 边框/字 */
+  --btn-danger-border: #c03030;       /* --error（hover 加深至 --error-deep） */
+  --btn-danger-border-hover: #9a2020; /* --error-deep */
+  --btn-danger-fg: #c03030;
+
+  /* ── 图表 5 色 · 朱砂 + 语义 ──────────────────────────── */
+  --chart-1: #1554a8;               /* vermilion-6 · 主品牌 */
+  --chart-2: #88addd;               /* vermilion-4 · 浅蓝 */
+  --chart-3: #6b7a3a;               /* success */
+  --chart-4: #a8864b;               /* warning */
+  --chart-5: #0c3c80;               /* vermilion-7 · 深朱砂 */
+
+  /* ── Sidebar ──────────────────────────────────────────── */
+  --sidebar: #fafaf7;               /* --paper-cool */
+  --sidebar-foreground: #1a2332;
+  --sidebar-primary: #1554a8;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f7f4ec;        /* hover */
+  --sidebar-accent-foreground: #1a2332;
+  --sidebar-border: #e8e4d9;
+  --sidebar-ring: #1554a8;
+
+  /* ── 字体栈 ──────────────────────────────────────────── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Noto Sans SC', sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── 圆角 · 5 阶阶梯（Paper 修订 · 替代原「2px 唯一锐角」立场）──────
+     2px   最小（少数）· 滚动条滑块 / 进度条填充
+     4px   常用（主力）· 按钮 / 输入框 / 标签 / chip / tab / CTA / 二级菜单项  ← base
+     8px   卡片        · 卡片 / 面板 / 横幅 / composer / 下拉浮层 / banner
+     999px 胶囊（克制）· 筛选 / 分页圆点 / 微型计数 / 状态徽章
+     50%   圆形        · 头像 / 状态圆点
+     说明：表格 / 分隔器 / 整页区块保持直角（border-radius: 0），不参与圆角阶梯。 */
+  --radius: 0.25rem;                /* = 4px · 主力控件默认（base） */
+  --radius-xs: 0.125rem;            /* = 2px · 最小：滚动条滑块 / 进度条填充 */
+  --radius-card: 0.5rem;            /* = 8px · 卡片 / 面板 / 浮层 / banner / composer */
+  --radius-pill: 999px;             /* 胶囊：筛选 / 分页圆点 / 微型计数 / 状态徽章 */
+  --radius-circle: 50%;             /* 圆形：头像 / 状态圆点 */
+
+  /* ── 阴影阶梯 · 中性墨黑色（DiscoveryOS 默认 flat）── */
+  /* 小阶（2xs / xs / sm / base / md）极弱 — 本系统几乎不使用 */
+  --shadow-2xs: 0 1px 0 0 rgba(26, 35, 50, 0.02);
+  --shadow-xs:  0 1px 2px 0 rgba(26, 35, 50, 0.03);
+  --shadow-sm:  0 1px 3px 0 rgba(26, 35, 50, 0.04), 0 1px 2px -1px rgba(26, 35, 50, 0.04);
+  --shadow:     0 2px 6px -1px rgba(26, 35, 50, 0.05), 0 1px 4px -2px rgba(26, 35, 50, 0.04);
+  --shadow-md:  0 4px 12px -2px rgba(26, 35, 50, 0.06), 0 2px 6px -3px rgba(26, 35, 50, 0.05);
+  /* 大阶（lg / xl / 2xl）= DiscoveryOS 唯二合法投影 */
+  --shadow-lg:  0 8px 24px -2px rgba(0, 0, 0, 0.08);   /* = --shadow-overlay */
+  --shadow-xl:  0 12px 40px -3px rgba(0, 0, 0, 0.10);
+  --shadow-2xl: 0 20px 60px -4px rgba(0, 0, 0, 0.12);  /* = --shadow-modal */
+
+  /* ── 字距 · DiscoveryOS 通常使用基线（特殊场景在组件内单独覆盖）── */
+  --tracking-normal: 0em;
+
+  /* ── 间距单位 · 沿用 Tailwind 默认 0.25rem (4px)；
+        DiscoveryOS 间距阶梯 4/6/8/10/12/14/16/20/24/32/40/56/80 全部为 4 的倍数 ── */
+  --spacing: 0.25rem;
+
+  /* ── 辅助色 · 4 色相 × 5 阶 (v2.4) ───────────────────────────────────
+     与 vermilion / success / warning / error 错峰分布；用于学科分类、
+     数据可视化、用户头像、标签等需多色区分的场景。
+     L1 极浅填充 · L2 暗色主题清晰点亮 / 浅色描边 · L3 Icon / 中度强调
+     L4 字体 / 深描边 · L5 最深强调 */
+  --aux-mint-1: #e4f0ec; --aux-mint-2: #9bd5be; --aux-mint-3: #40bf95; --aux-mint-4: #259675; --aux-mint-5: #125c47;
+  --aux-cyan-1: #e4f0f0; --aux-cyan-2: #9bd0d5; --aux-cyan-3: #40b5bf; --aux-cyan-4: #258e96; --aux-cyan-5: #12575c;
+  --aux-violet-1: #ece4f0; --aux-violet-2: #be9bd5; --aux-violet-3: #8c40bf; --aux-violet-4: #6d2596; --aux-violet-5: #42125c;
+  --aux-magenta-1: #f0e4e9; --aux-magenta-2: #d59bb8; --aux-magenta-3: #bf4082; --aux-magenta-4: #962566; --aux-magenta-5: #5c123f;
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * Tailwind v4 · @theme inline 映射
+ * 让 utilities（bg-background / text-foreground / ring-ring 等）
+ * 直接引用上面的语义 token。
+ * ──────────────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* 辅助色 · 4 色相 × 5 阶 (v2.4) → utilities: bg-aux-mint-1, text-aux-cyan-3, etc. */
+  --color-aux-mint-1: var(--aux-mint-1); --color-aux-mint-2: var(--aux-mint-2);
+  --color-aux-mint-3: var(--aux-mint-3); --color-aux-mint-4: var(--aux-mint-4);
+  --color-aux-mint-5: var(--aux-mint-5);
+  --color-aux-cyan-1: var(--aux-cyan-1); --color-aux-cyan-2: var(--aux-cyan-2);
+  --color-aux-cyan-3: var(--aux-cyan-3); --color-aux-cyan-4: var(--aux-cyan-4);
+  --color-aux-cyan-5: var(--aux-cyan-5);
+  --color-aux-violet-1: var(--aux-violet-1); --color-aux-violet-2: var(--aux-violet-2);
+  --color-aux-violet-3: var(--aux-violet-3); --color-aux-violet-4: var(--aux-violet-4);
+  --color-aux-violet-5: var(--aux-violet-5);
+  --color-aux-magenta-1: var(--aux-magenta-1); --color-aux-magenta-2: var(--aux-magenta-2);
+  --color-aux-magenta-3: var(--aux-magenta-3); --color-aux-magenta-4: var(--aux-magenta-4);
+  --color-aux-magenta-5: var(--aux-magenta-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  /* 圆角阶梯（Paper 5 阶 · base = --radius = 4px）
+     rounded-sm → 2px · 最小（滚动条 / 进度条）
+     rounded-md → 4px · 常用（按钮 / 输入 / tab / chip / CTA / 二级菜单）
+     rounded-lg → 8px · 卡片 / 面板 / 浮层 / banner / composer
+     rounded-xl → 8px · 卡片（封顶，不再上探）
+     rounded-pill → 999px · 胶囊（筛选 / 分页圆点 / 微型计数 / 状态徽章）
+     圆形（头像 / 状态点）用显式 border-radius: 50%（或 var(--radius-circle)）。 */
+  --radius-sm: calc(var(--radius) - 2px);   /* 2px · 最小 */
+  --radius-md: var(--radius);               /* 4px · 常用（主力） */
+  --radius-lg: calc(var(--radius) + 4px);   /* 8px · 卡片 / 浮层 */
+  --radius-xl: calc(var(--radius) + 4px);   /* 8px · 卡片（同 lg） */
+  --radius-pill: var(--radius-pill);        /* 999px · 胶囊 → rounded-pill */
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
+  --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+  --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+  --tracking-normal: var(--tracking-normal);
+  --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+  --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+  --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+
+  --spacing: var(--spacing);
+}
+
+/* ──────────────────────────────────────────────────────────────────────
+ * 基础重置（可选 · tweakcn 通常不包含；此处保持 DiscoveryOS 立场一致）
+ * 本文件为暖纸单主题抽取，故 color-scheme 锁定 light。
+ * ──────────────────────────────────────────────────────────────────── */
+html { color-scheme: light; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* End of theme · DiscoveryOS Paper V1 (tweakcn export · warm paper only + v2.4 aux palette · 5-tier radius) */
